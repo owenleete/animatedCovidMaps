@@ -130,22 +130,27 @@ start_date = datetime.date(2020, 1, 27)
 end_date = datetime.date(2021, 3, 2)
 delta = datetime.timedelta(days=1)
 while start_date <= end_date:
-    fig = dailyCases.plot(column=str(start_date), cmap='plasma', figsize=(5,3), linewidth=0.0, edgecolor='0.8', vmin=0, vmax=.0025, 
+    fig = dailyCases.plot(column=str(start_date), cmap='plasma', figsize=(10,6), linewidth=0.0, edgecolor='0.8', vmin=0, vmax=.0025, 
                        legend=True, norm=plt.Normalize(vmin=0, vmax=.0025)) # capped daily increase to be max 0.0025 or 0.25% per day 
                                                                             # to allow for more dynamic range in the common lower rates
     # remove axis of chart
     fig.axis('off')
     
+    # add a title
+    fig.set_title('Daily cases per capita', \
+              fontdict={'fontsize': '20',
+                         'fontweight' : '3'})
+    
     # position the annotation to the bottom left
-    fig.annotate(str(start_date),
+    fig.annotate(start_date.strftime("%b, %Y"),
             xy=(-70, 22),
             horizontalalignment='right', verticalalignment='bottom',
-            fontsize=12)
+            fontsize=14)
     
     # save the figure png in the output path
     filepath = os.path.join(output_path, str(start_date)+'_.png')
     chart = fig.get_figure()
-    chart.savefig(filepath, dpi=300)
+    chart.savefig(filepath, dpi=150)
     plt.close(chart)
     start_date += delta
 
@@ -203,22 +208,26 @@ start_date = datetime.date(2020, 2, 21)
 end_date = datetime.date(2021, 2, 27)
 delta = datetime.timedelta(days=1)
 while start_date <= end_date:
-    fig = movement.plot(column=str(start_date), cmap='plasma', figsize=(5,3), linewidth=0.0, edgecolor='0.8', vmin=-70, vmax=10, 
+    fig = movement.plot(column=str(start_date), cmap='plasma', figsize=(10,6), linewidth=0.0, edgecolor='0.8', vmin=-70, vmax=10, 
                        legend=True, norm=plt.Normalize(vmin=-70, vmax=10)) #
     
     # remove axis of chart
     fig.axis('off')
     
+    fig.set_title('Percent mobility change from baseline', \
+              fontdict={'fontsize': '20',
+                         'fontweight' : '3'})
+    
     # position the annotation to the bottom left
     fig.annotate(start_date.strftime("%b, %Y"),
             xy=(-70, 22),
             horizontalalignment='right', verticalalignment='bottom',
-            fontsize=12)
+            fontsize=14)
     
     # this will save the figure as a high-res png in the output path. you can also save as svg if you prefer.
     filepath = os.path.join(output_path, str(start_date)+'_.png')
     chart = fig.get_figure()
-    chart.savefig(filepath, dpi=300)
+    chart.savefig(filepath, dpi=150)
     plt.close(chart)
     start_date += delta
 
